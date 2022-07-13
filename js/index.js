@@ -31,7 +31,7 @@ $(document).ready(function () {
 
 function bindWordNo() {
   let optWardNo;
-  let wardNo = ['१', '२', '३', '४', '५', '६', '७', '८', '९', '१०', '११', '१२', '१३', '१४', '१५', '१६', '१७', '१८', '१९', '२०']
+  let wardNo = ['१', '२', '३', '४', '५', '६', '७', '८', '९', '१०']
   optWardNo += "<option value =''>वार्ड क्र. निवडा *</option>"
   wardNo.map((ele) => {
     optWardNo += "<option value=" + ele + ">" + ele + "</option>"
