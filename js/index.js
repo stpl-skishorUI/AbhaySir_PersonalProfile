@@ -31,21 +31,21 @@ function saveData() {
 
   }
   let queryparams;
-  queryparams = 'PersonName=' + PersonName + '&MobileNo=' + MobileNo+ '&WardNo=' + WardNo+ '&LocationName=' + 'ddsf' + '&Description=' + 'sdfds';
-  //console.log(JSON.stringify(queryparams));
+  queryparams = 'PersonName=' + PersonName + '&MobileNo=' + MobileNo + '&WardNo=' + WardNo + '&LocationName=' + 'ddsf' + '&Description=' + 'sdfds';
   $.ajax({
-      type: "POST",
-      url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?" + queryparams,
-      headers: { 'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept', 'Accept': 'application/json,application/text,*/*' },
-      //data: JSON.stringify(queryparams),
-      dataType: "json",
-      contentType: "text/plain",
-      processdata: false,
-      success: function (data) {
-      },
-      error: function () {
-          ///alert("Error Occured");
-      }
+    type: "GET",
+    url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?" + queryparams,
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    data: "",
+    dataType: "json",
+    contentType: "application/json, text/plain",
+    success: function (data) {
+      console.log(data)
+    },
+    error: function () {
+      console.log(error)
+      ///alert("Error Occured");
+    }
   })
 
 }
@@ -54,8 +54,8 @@ function validateMobileNumber(mobileNo) {
   var regex = /(^[6-9]\d{9}$)/;
   var filter = /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/;
   if (regex.test(mobileNo)) {
-      return true;
+    return true;
   } else {
-      return false;
+    return false;
   }
 }
