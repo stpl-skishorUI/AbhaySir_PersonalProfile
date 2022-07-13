@@ -62,32 +62,33 @@
                     <div class="form-container">
                         <div class="mb-3">
                             <textarea class="form-control" placeholder="नगरपालिका निवडणुकी विषयी आपले मत" rows="5"
-                                required></textarea>
+                               id="Description" required></textarea>
                             <div class="invalid-feedback">
                                 कृपया नगरपालिका निवडणुकी विषयी आपले मत टाका .
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="वार्ड क्र." required />
+
+                            <input type="text" class="form-control" placeholder="वार्ड क्र." required id="WardNo"/>
                             <div class="invalid-feedback">
                                 कृपया वार्ड क्र. टाका .
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="आपण राहत असलेला एरिया" required />
+                            <input type="text" class="form-control" placeholder="आपण राहत असलेला एरिया" required  id="LocationName" />
                             <div class="form-text">(गल्ली, वाडी, मळा)</div>
                             <div class="invalid-feedback">
                                 कृपया गल्ली, वाडी, मळा टाका .
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="पूर्ण नाव" />
+                            <input type="text" class="form-control" placeholder="पूर्ण नाव" id="PersonName"  />
                         </div>
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="मोबाईल क्र." />
+                            <input type="text" class="form-control" placeholder="मोबाईल क्र." id="MobileNo"/>
                         </div>
                         <div class="mb-0 text-center">
-                            <button class="btn btn-main btn-lg" type="submit">सूचना समाविष्ट करा </button>
+                            <button class="btn btn-main btn-lg" type="submit" onclick="saveData()">सूचना समाविष्ट करा </button>
                         </div>
                     </div>
                 </div>
