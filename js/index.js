@@ -15,23 +15,52 @@
   })
 })()
 
+
 $(document).ready(function () {
-  // saveData();
-  saveData();
+  toastr.options = {
+    "showDuration": "2000",
+  }
+  bindWordNo();
+  $("#button").click(function (e) {
+    e.preventDefault();
+    saveData();
+  });
 });
 
+
+function bindWordNo() {
+  let optWardNo;
+  let wardNo = ['१', '२', '३', '४', '५', '६', '७', '८', '९', '१०', '११', '१२', '१३', '१४', '१५', '१६', '१७', '१८', '१९', '२०']
+  optWardNo += "<option value =''>वार्ड क्र. निवडा *</option>"
+  wardNo.map((ele) => {
+    optWardNo += "<option value=" + ele + ">" + ele + "</option>"
+  })
+
+  $('#WardNo').html(optWardNo);
+}
 function saveData() {
+
   let PersonName = $('#PersonName').val();
   let MobileNo = $('#MobileNo').val();
   let WardNo = $('#WardNo').val();
   let LocationName = $('#LocationName').val();
   let Description = $('#Description').val();
-
-  if (PersonName == "" || MobileNo == "" || WardNo == "") {
-
+  if (Description.trim() == "") {
+    toastr.error('कृपया निवडणुकी विषयी आपले मत टाका');
+    return false;
+  } else if (WardNo.trim() == "") {
+    toastr.error('कृपया तुमचा वार्ड क्र. निवडा');
+    return false;
+  } else if (LocationName.trim() == "") {
+    toastr.error('कृपया तुमचा राहत असलेला एरिया (गल्ली, वाडी, मळा )');
+    return false;
   }
+
+  MobileNoOrPanTxtChange();
   let queryparams;
-  queryparams = 'PersonName=' + PersonName + '&MobileNo=' + MobileNo + '&WardNo=' + WardNo + '&LocationName=' + 'ddsf' + '&Description=' + 'sdfds';
+  queryparams = 'PersonName=' + PersonName.trim() + '&MobileNo=' + MobileNo.trim() + '&WardNo=' + WardNo.trim() + '&LocationName=' + LocationName.trim() + '&Description=' + Description.trim();
+  console.log(queryparams);
+  // return;
   $.ajax({
     type: "GET",
     url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?" + queryparams,
@@ -40,22 +69,29 @@ function saveData() {
     dataType: "json",
     contentType: "application/json, text/plain",
     success: function (data) {
-      console.log(data)
+      if (data.data1.length) {
+        $("#PersonName,#WardNo,#Description,#LocationName,#WardNo,#MobileNo").val('');
+        toastr.success(data.data1[0].Msg);
+
+      }
     },
-    error: function () {
-      console.log(error)
-      ///alert("Error Occured");
+    error: function (data) {
+      toastr.error("Error");
     }
   })
 
 }
 
-function validateMobileNumber(mobileNo) {
+function MobileNoOrPanTxtChange() {
+  let MobileNo = $('#MobileNo').val();
   var regex = /(^[6-9]\d{9}$)/;
   var filter = /([0-9]{10})|(\([0-9]{3}\)\s+[0-9]{3}\-[0-9]{4})/;
-  if (regex.test(mobileNo)) {
-    return true;
-  } else {
-    return false;
+  if (MobileNo != "") {
+    if (regex.test(MobileNo)) {
+      return true;
+    } else {
+      toastr.error('कृपया वैध मोबाईल क्रमांक प्रविष्ट करा ');
+      return false;
+    }
   }
 }
