@@ -19,13 +19,15 @@
 $(document).ready(function () {
   toastr.options = {
     "showDuration": "2000",
+    'preventDuplicates': false
+
   }
   bindWordNo();
   $("#button").click(function (e) {
     e.preventDefault();
     saveData();
   });
- 
+
 });
 
 
@@ -40,12 +42,13 @@ function bindWordNo() {
   $('#WardNo').html(optWardNo);
 }
 function saveData() {
-
+  toastr.remove()
   let PersonName = $('#PersonName').val();
   let MobileNo = $('#MobileNo').val();
   let WardNo = $('#WardNo').val();
   let LocationName = $('#LocationName').val();
   let Description = $('#Description').val();
+
   if (Description.trim() == "") {
     toastr.error('कृपया निवडणुकी विषयी आपले मत टाका');
     return false;
@@ -55,21 +58,23 @@ function saveData() {
   } else if (LocationName.trim() == "") {
     toastr.error('कृपया तुमचा राहत असलेला एरिया (गल्ली, वाडी, मळा )');
     return false;
-  }
-  let obj= {
+  } 
+
+  let obj = {
     'PersonName': PersonName,
-    'MobileNo':MobileNo,
-    'WardNo':WardNo,
-    'LocationName':LocationName,
-    'Description':Description
+    'MobileNo': MobileNo,
+    'WardNo': WardNo,
+    'LocationName': LocationName,
+    'Description': Description
 
   }
 
+  //validation for mobile number
+  if (MobileNoOrPanTxtChange() == false) { return false; };
 
-  MobileNoOrPanTxtChange(); //validation for mobile number
   $.ajax({
     type: "POST",
-    url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?" ,
+    url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?",
     headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
     data: obj,//JSON.parse(obj),
     dataType: "json",
@@ -77,13 +82,13 @@ function saveData() {
     success: function (data) {
       if (data.data1.length) {
         $("#PersonName,#WardNo,#Description,#LocationName,#WardNo,#MobileNo").val('');
-        $("#SuccessModal").modal('show');   
-            }
+        $("#SuccessModal").modal('show');
+      }
     },
     error: function (data) {
       toastr.error("Error");
     }
-  })
+  });
 
 }
 
