@@ -25,7 +25,7 @@ $(document).ready(function () {
     e.preventDefault();
     saveData();
   });
-
+ 
 });
 
 
@@ -56,24 +56,20 @@ function saveData() {
     toastr.error('कृपया तुमचा राहत असलेला एरिया (गल्ली, वाडी, मळा )');
     return false;
   }
-  let obj = {
+  let obj= {
     'PersonName': PersonName,
-    'MobileNo': MobileNo,
-    'WardNo': WardNo,
-    'LocationName': LocationName,
-    'Description': Description
+    'MobileNo':MobileNo,
+    'WardNo':WardNo,
+    'LocationName':LocationName,
+    'Description':Description
 
   }
 
 
-  MobileNoOrPanTxtChange();
-  let queryparams;
-  queryparams = 'PersonName=' + PersonName.trim() + '&MobileNo=' + MobileNo.trim() + '&WardNo=' + WardNo.trim() + '&LocationName=' + LocationName.trim() + '&Description=' + Description.trim();
-  console.log(queryparams);
-  // return;
+  MobileNoOrPanTxtChange(); //validation for mobile number
   $.ajax({
     type: "POST",
-    url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?",//+ queryparams,
+    url: "http://electionsurvey.erpguru.in/service.asmx/insert_surveydata_1_0?" ,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
     data: obj,//JSON.parse(obj),
     dataType: "json",
@@ -81,8 +77,8 @@ function saveData() {
     success: function (data) {
       if (data.data1.length) {
         $("#PersonName,#WardNo,#Description,#LocationName,#WardNo,#MobileNo").val('');
-        $("#SuccessModal").modal('show');
-      }
+        $("#SuccessModal").modal('show');   
+            }
     },
     error: function (data) {
       toastr.error("Error");
